@@ -191,21 +191,7 @@ map_year = st.sidebar.slider(
     key="map_year_slider"   # ✅ UNIQUE KEY
 )
 
-map_data = yearly_comfort_map[yearly_comfort_map["year"] == map_year]
 
-fig_map = px.scatter_mapbox(
-    map_data,
-    lat="lat",
-    lon="lon",
-    size="comfortable_days",
-    color="comfortable_days",
-    zoom=6,
-    size_max=40,
-    mapbox_style="carto-positron",
-    title=f"Comfortable Temperature Days in Islamabad – {map_year}"
-)
-
-st.plotly_chart(fig_map, use_container_width=True)
 
 
 
