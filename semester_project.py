@@ -13,7 +13,7 @@ import plotly.graph_objects as go
 import calendar
 
 
-df = pd.read_csv("/content/ERA5_Land_Daily_Temp_2000_2025 (1).csv")
+df = pd.read_csv("ERA5_Land_Daily_Temp_2000_2025 (1).csv")
 
 
 df['date'] = pd.to_datetime(df['date'])
