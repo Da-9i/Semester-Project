@@ -187,7 +187,8 @@ map_year = st.sidebar.slider(
     "Select year for map",
     int(yearly_comfort_map["year"].min()),
     int(yearly_comfort_map["year"].max()),
-    int(yearly_comfort_map["year"].max())
+    int(yearly_comfort_map["year"].max()),
+    key="map_year_slider"   # ✅ UNIQUE KEY
 )
 
 map_data = yearly_comfort_map[yearly_comfort_map["year"] == map_year]
@@ -205,5 +206,6 @@ fig_map = px.scatter_mapbox(
 )
 
 st.plotly_chart(fig_map, use_container_width=True)
+
 
 
