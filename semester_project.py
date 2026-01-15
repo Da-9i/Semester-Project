@@ -16,6 +16,25 @@ st.title("🌤️ Comfortable Temperature Days in Islamabad (2000–2025)")
 DATA_PATH = Path(__file__).parent / "era5_land_daily_temp_2000_2025.csv"
 df = pd.read_csv(DATA_PATH)
 
+# Ensure correct column names
+df.columns = df.columns.str.strip().str.lower()
+
+# Rename temperature column if needed
+if "temp_c" not in df.columns:
+    for col in df.columns:
+        if "temp" in col:
+            df.rename(columns={col: "temp_c"}, inplace=True)
+            break
+
+# Add Islamabad coordinates
+df["lat"] = 33.6844
+df["lon"] = 73.0479
+
+comfortable = df.loc[
+    (df["temp_c"] >= 18) & (df["temp_c"] <= 25)
+].copy()
+
+
 df["date"] = pd.to_datetime(df["date"])
 df["year"] = df["date"].dt.year
 df["month"] = df["date"].dt.month
@@ -117,16 +136,18 @@ fig_table = go.Figure(data=[go.Table(
 
 st.plotly_chart(fig_table, use_container_width=True)
 
-# ---------- Map Visualization ----------
-df["lat"] = 33.6844
-df["lon"] = 73.0479
+
 
 yearly_comfort_map = (
-    comfortable.groupby("year")
-    .agg({"lat": "first", "lon": "first", "temp_c": "count"})
-    .reset_index()
-    .rename(columns={"temp_c": "comfortable_days"})
+    comfortable
+    .groupby("year", as_index=False)
+    .agg(
+        lat=("lat", "first"),
+        lon=("lon", "first"),
+        comfortable_days=("year", "count")
+    )
 )
+
 
 st.subheader("🗺️ Spatial View (Islamabad)")
 
@@ -142,3 +163,4 @@ fig_map = px.scatter_mapbox(
 )
 
 st.plotly_chart(fig_map, use_container_width=True)
+
