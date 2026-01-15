@@ -102,8 +102,7 @@ fig = px.imshow(
 fig.update_layout(template='plotly_white')
 fig.show()
 
-from google.colab import drive
-drive.mount('/content/drive')
+
 
 comfortable = df.loc[
     (df['temp_c'] >= 18) & (df['temp_c'] <= 25)
