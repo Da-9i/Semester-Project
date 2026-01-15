@@ -151,16 +151,59 @@ yearly_comfort_map = (
 
 st.subheader("🗺️ Spatial View (Islamabad)")
 
+st.sidebar.subheader("🗺️ Map Controls")
+
+map_year = st.sidebar.slider(
+    "Select year for map",
+    int(yearly_comfort_map["year"].min()),
+    int(yearly_comfort_map["year"].max()),
+    int(yearly_comfort_map["year"].max())
+)
+
+map_data = yearly_comfort_map[
+    yearly_comfort_map["year"] == map_year
+]
+
 fig_map = px.scatter_mapbox(
-    yearly_comfort_map,
+    map_data,
     lat="lat",
     lon="lon",
     size="comfortable_days",
     color="comfortable_days",
-    hover_name="year",
     zoom=6,
-    mapbox_style="carto-positron"
+    size_max=40,
+    mapbox_style="carto-positron",
+    title=f"Comfortable Temperature Days in Islamabad – {map_year}",
+    hover_data={"comfortable_days": True}
 )
 
 st.plotly_chart(fig_map, use_container_width=True)
+
+
+st.subheader("🗺️ Spatial Distribution of Comfortable Days")
+
+st.sidebar.subheader("Map Controls")
+map_year = st.sidebar.slider(
+    "Select year for map",
+    int(yearly_comfort_map["year"].min()),
+    int(yearly_comfort_map["year"].max()),
+    int(yearly_comfort_map["year"].max())
+)
+
+map_data = yearly_comfort_map[yearly_comfort_map["year"] == map_year]
+
+fig_map = px.scatter_mapbox(
+    map_data,
+    lat="lat",
+    lon="lon",
+    size="comfortable_days",
+    color="comfortable_days",
+    zoom=6,
+    size_max=40,
+    mapbox_style="carto-positron",
+    title=f"Comfortable Temperature Days in Islamabad – {map_year}"
+)
+
+st.plotly_chart(fig_map, use_container_width=True)
+
 
