@@ -49,7 +49,7 @@ yearly_comfort = (
     .reset_index(name="comfortable_days")
 )
 
-st.subheader("📊 Yearly Comfortable Temperature Days")
+st.subheader(" Yearly Comfortable Temperature Days")
 
 fig_bar = px.bar(
     yearly_comfort,
@@ -82,7 +82,7 @@ heatmap_data = monthly_comfort.pivot(
     values="count"
 ).fillna(0)
 
-st.subheader("🔥 Monthly Distribution Heatmap")
+st.subheader(" Monthly Distribution Heatmap")
 
 fig_heatmap = px.imshow(
     heatmap_data,
@@ -114,7 +114,7 @@ summary_table = yearly_total.merge(
     on="year"
 )
 
-st.subheader("📋 Yearly Summary Table")
+st.subheader(" Yearly Summary Table")
 
 fig_table = go.Figure(data=[go.Table(
     header=dict(
@@ -149,7 +149,7 @@ yearly_comfort_map = (
 )
 
 
-st.subheader("🗺️ Spatial View (Islamabad)")
+st.subheader(" Spatial View (Islamabad)")
 
 st.sidebar.subheader("🗺️ Map Controls")
 
@@ -178,6 +178,7 @@ fig_map = px.scatter_mapbox(
 )
 
 st.plotly_chart(fig_map, use_container_width=True)
+
 
 
 
